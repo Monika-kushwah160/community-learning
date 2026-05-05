@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>My Badges</h2>
+
+<div class="badge-grid">
+
+{% for b in badges %}
+
+<div class="badge-card">
+
+<h3>{{ b.badge.name }}</h3>
+
+<p>{{ b.badge.description }}</p>
+
+</div>
+
+{% empty %}
+
+<p>No badges yet</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

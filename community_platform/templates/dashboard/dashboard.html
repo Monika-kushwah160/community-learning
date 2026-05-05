@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard">
+
+<h1>Welcome back, {{ request.user.username }}!</h1>
+
+<p>Here's what's happening with your learning journey</p>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+<h3>Sessions Attended</h3>
+<h2>{{ sessions_attended }}</h2>
+</div>
+
+<div class="stat-card">
+<h3>Sessions Taught</h3>
+<h2>{{ sessions_taught }}</h2>
+</div>
+
+<div class="stat-card">
+<h3>Total Points</h3>
+<h2>{{ points }}</h2>
+</div>
+
+<div class="stat-card">
+<h3>Badges Earned</h3>
+<h2>{{ badges }}</h2>
+</div>
+
+</div>
+
+<!-- <div class="dashboard-tabs">
+
+<button class="tab active">My Enrollments ({{ enrollments|length }})</button>
+
+<button class="tab">My Sessions ({{ my_sessions|length }})</button>
+
+</div> -->
+<div class="dashboard-tabs">
+
+<button class="tab active" onclick="showTab('enrollments')">
+My Enrollments ({{ enrollments|length }})
+</button>
+
+<button class="tab" onclick="showTab('sessions')">
+My Sessions ({{ my_sessions|length }})
+</button>
+
+</div>
+
+<!-- ENROLLMENTS -->
+
+<div id="enrollments" class="tab-content active">
+
+{% if enrollments %}
+
+<div class="session-grid">
+
+{% for enroll in enrollments %}
+
+<div class="session-card">
+
+<span class="tag">Enrolled</span>
+
+<h3>{{ enroll.session.title }}</h3>
+
+<p class="instructor">
+Instructor: {{ enroll.session.instructor.username }}
+</p>
+
+<p class="date">
+{{ enroll.session.datetime }}
+</p>
+
+<a href="{% url 'sessions:session_detail' enroll.session.id %}" class="btn-primary">
+View Details
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-box">
+
+<p>No enrollments yet</p>
+
+<a href="{% url 'sessions:session_list' %}" class="btn-primary">
+Browse Sessions
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+<!-- MY SESSIONS -->
+
+<div id="sessions" class="tab-content">
+
+{% if my_sessions %}
+
+<div class="session-grid">
+
+{% for session in my_sessions %}
+
+<div class="session-card">
+
+<span class="tag">Teaching</span>
+
+<h3>{{ session.title }}</h3>
+
+<p class="instructor">
+Instructor: {{ session.instructor.username }}
+</p>
+
+<p class="date">
+{{ session.datetime }}
+</p>
+
+<a href="{% url 'sessions:session_detail' session.id %}" class="btn-primary">
+View Details
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-box">
+<p>No sessions created yet.</p>
+</div>
+
+{% endif %}
+
+</div>
+
+<!-- ENROLLED SESSIONS -->
+
+<!-- <div class="dashboard-card">
+
+{% if enrollments %}
+
+{% for enroll in enrollments %}
+
+<div class="session-row">
+
+<h4>{{ enroll.session.title }}</h4>
+
+<p>{{ enroll.session.datetime }}</p>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="empty-box">
+
+<p>No enrollments yet</p>
+
+<a href="{% url 'sessions:session_list' %}" class="btn-primary">
+Browse Sessions
+</a>
+
+</div>
+
+{% endif %}
+
+</div> -->
+
+<!-- end code -->
+
+</div>
+
+<script>
+
+function showTab(tabName){
+
+    const contents = document.querySelectorAll(".tab-content");
+    const tabs = document.querySelectorAll(".tab");
+
+    contents.forEach(content => content.classList.remove("active"));
+    tabs.forEach(tab => tab.classList.remove("active"));
+
+    document.getElementById(tabName).classList.add("active");
+
+    if(tabName === "enrollments"){
+        tabs[0].classList.add("active");
+    }else{
+        tabs[1].classList.add("active");
+    }
+
+}
+
+</script>
+
+{% endblock %}

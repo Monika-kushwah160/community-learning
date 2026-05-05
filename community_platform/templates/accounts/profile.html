@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="profile-container">
+
+<div class="profile-card">
+
+<!-- PROFILE IMAGE -->
+
+<div class="profile-avatar">
+
+{% if profile.profile_picture %}
+<img src="{{ profile.profile_picture.url }}" alt="profile">
+{% else %}
+<img src="{% static 'images/default.png' %}" alt="profile">
+{% endif %}
+
+</div>
+
+<!-- NAME -->
+
+<h2 class="profile-name">{{ user_obj.username }}</h2>
+
+<p class="profile-email">{{ user_obj.email }}</p>
+
+<!-- DETAILS -->
+
+<div class="profile-details">
+
+<div class="detail-box">
+<h4>Bio: </h4>
+<p>{{ profile.bio|default:"No bio added yet" }}</p>
+
+<h4>Skills: </h4>
+<p>{{ profile.skills|default:"No skills added yet" }}</p>
+</div>
+
+</div>
+
+<!-- BUTTON -->
+
+<div class="profile-actions">
+
+<a href="{% url 'edit_profile' user_obj.id %}" class="btn-primary">
+Edit Profile
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

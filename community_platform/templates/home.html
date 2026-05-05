@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="hero">
+
+    <h1>
+        Learn anything from <span class="purple">anyone</span>,
+        teach what you <span class="orange">love</span>
+    </h1>
+
+    <p>
+        Join a vibrant community where everyone is both a teacher and learner.
+    </p>
+
+    <div class="buttons">
+       <div class="buttons">
+
+<a href="{% url 'sessions:session_list' %}" class="btn-explore"> 📖 Explore Sessions </a>
+
+{% if user.is_authenticated %}
+<a href="{% url 'sessions:create_session' %}" class="btn-teach">
+Start Teaching
+</a>
+{% else %}
+<a href="{% url 'login' %}" class="btn-teach">
+Start Teaching
+</a>
+{% endif %}
+
+
+</div>
+
+    </div>
+
+</section>
+
+
+<section class="features">
+
+    <h2>Why LearnHub?</h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            ⭐
+            <h3>Gamification & Rewards</h3>
+            <p>Earn points, unlock badges, climb leaderboard.</p>
+        </div>
+
+        <div class="card">
+            ⚡
+            <h3>Short & Focused</h3>
+            <p>30–60 minute sessions for effective learning.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="cta">
+
+    <h2>Ready to start learning?</h2>
+
+    <p>Your next skill is just one session away.</p>
+
+    <button>Get Started →</button>
+
+</section>
+
+{% endblock %}

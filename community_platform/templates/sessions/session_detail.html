@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="session-detail">
+
+<h2>{{ session.title }}</h2>
+
+<p><strong>Instructor:</strong> {{ session.instructor.username }}</p>
+
+<p><strong>Category:</strong> {{ session.category }}</p>
+
+<p><strong>Date:</strong> {{ session.datetime }}</p>
+
+<p><strong>Description:</strong></p>
+<p>{{ session.description }}</p>
+
+<a href="{% url 'sessions:join_session' session.id %}" class="session-btn">
+Join Session
+</a>
+
+
+<h3>Feedback</h3>
+
+{% for feedback in session.feedbacks.all %}
+
+<div class="feedback-card">
+
+<strong>{{ feedback.user.username }}</strong>
+
+⭐ {{ feedback.rating }}
+
+<p>{{ feedback.comment }}</p>
+
+</div>
+
+{% empty %}
+
+<p>No feedback yet</p>
+
+{% endfor %}
+
+<a href="{% url 'sessions:leave_feedback' session.id %}" class="session-btn">
+Leave Feedback
+</a>
+
+<a href="{% url 'checkout' session.id %}" class="btn-primary" class="session-btn">
+Pay & Join Session
+</a>
+
+</div>
+
+{% endblock %}

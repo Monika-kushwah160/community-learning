@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="session-container">
+
+<h2>Browse Sessions</h2>
+
+<div class="sessions-grid">
+
+{% for session in sessions %}
+
+<div class="session-card">
+
+<div class="session-category">
+{{ session.category }}
+</div>
+
+<div class="session-title">
+{{ session.title }}
+</div>
+
+<div class="session-meta">
+Instructor: {{ session.instructor.username }}
+</div>
+
+<div class="session-meta">
+{{ session.datetime }}
+</div>
+
+<a href="{% url 'sessions:session_detail' session.id %}" class="session-btn">
+View Details
+</a>
+
+</div>
+
+{% empty %}
+
+<p>No sessions available.</p>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

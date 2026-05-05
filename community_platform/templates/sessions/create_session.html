@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="session-form">
+
+<h2>Create New Session</h2>
+
+<form method="post" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+{{ form.non_field_errors }}
+
+<label>Title</label>
+{{ form.title }}
+{{ form.title.errors }}
+
+<label>Category</label>
+{{ form.category }}
+{{ form.category.errors }}
+
+<label>Description</label>
+{{ form.description }}
+{{ form.description.errors }}
+
+<label>Date & Time</label>
+{{ form.datetime }}
+{{ form.datetime.errors }}
+
+<label>Session Type</label>
+{{ form.session_type }}
+{{ form.session_type.errors }}
+
+<label>Upload Recording</label>
+{{ form.recorded_file }}
+{{ form.recorded_file.errors }}
+
+<button type="submit">Create Session</button>
+
+</form>
+
+</div>
+
+{% endblock %}

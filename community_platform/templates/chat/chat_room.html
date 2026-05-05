@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Session Chat</h2>
+
+<div id="chat-log"></div>
+
+<input id="chat-message-input" type="text">
+
+<button id="chat-message-submit">Send</button>
+
+<script>
+
+const roomName = "{{ room_name }}";
+
+const chatSocket = new WebSocket(
+    "ws://" + window.location.host +
+    "/ws/chat/" + roomName + "/"
+);
+
+chatSocket.onmessage = function(e) {
+
+    const data = JSON.parse(e.data);
+
+    const message = data.message;
+
+    const chatLog = document.querySelector("#chat-log");
+
+    chatLog.innerHTML += "<p>" + message + "</p>";
+
+};
+
+document.querySelector("#chat-message-submit").onclick = function() {
+
+    const input = document.querySelector("#chat-message-input");
+
+    chatSocket.send(JSON.stringify({
+        "message": input.value
+    }));
+
+    input.value = "";
+
+};
+
+</script>
+
+{% endblock %}

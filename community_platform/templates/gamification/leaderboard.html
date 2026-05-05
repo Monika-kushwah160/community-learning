@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="leaderboard-container">
+
+<h1 class="leaderboard-title">Leaderboard</h1>
+<p class="leaderboard-subtitle">
+Top learners and teachers in the community
+</p>
+
+<div class="leaderboard-list">
+
+{% for user in users %}
+
+<div class="leaderboard-card">
+
+<div class="leader-left">
+
+<div class="rank-badge">
+{{ forloop.counter }}
+</div>
+
+<div class="avatar-circle">
+{{ user.username|slice:":1"|upper }}
+</div>
+
+<div class="leader-info">
+<h3>{{ user.username }}</h3>
+
+<p>
+{{ user.sessions_attended }} sessions ·
+{{ user.sessions_taught }} taught
+</p>
+
+</div>
+
+</div>
+
+<div class="leader-points">
+<h2>{{ user.points }}</h2>
+<span>points</span>
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

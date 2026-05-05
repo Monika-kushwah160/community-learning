@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="join-box">
+
+<h2>{{ session.title }}</h2>
+
+<p>{{ session.description }}</p>
+
+{% if message %}
+<p class="success-msg">{{ message }}</p>
+{% endif %}
+
+{% if session.session_type == "live" %}
+
+<p>Live session will start at {{ session.datetime }}</p>
+
+{% else %}
+
+{% if session.recorded_file %}
+<video controls width="600">
+<source src="{{ session.recorded_file.url }}">
+</video>
+{% endif %}
+
+{% endif %}
+
+<h3>Live Chat</h3>
+
+<div id="chat-box" class="chat-box">
+
+{% for msg in messages %}
+<p>
+<b>{{ msg.user.username }}:</b> {{ msg.message }}
+</p>
+{% endfor %}
+
+</div>
+
+<input id="chat-message-input" placeholder="Type message">
+
+<button onclick="sendMessage()">Send</button>
+
+<!-- Pass session ID to JS -->
+<script>
+const sessionId = "{{ session.id }}";
+</script>
+
+<!-- Load chat script -->
+<script src="{% static 'js/chat.js' %}"></script>
+
+
+<a href="{% url 'dashboard' %}" class="session-btn">
+Go to Dashboard
+</a>
+
+</div>
+
+{% endblock %}

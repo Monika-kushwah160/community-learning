@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>LearnHub</title>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+🎓 LearnHub
+</div>
+
+<ul class="menu">
+
+<li><a href="/">Home</a></li>
+
+{% if user.is_authenticated %}
+
+<li><a href="/sessions/">Sessions</a></li>
+<li><a href="/dashboard/">Dashboard</a></li>
+<li><a href="/gamification/leaderboard/">Leaderboard</a></li>
+<li><a href="/accounts/profile/{{ user.id }}">Profile</a></li>
+<li><a href="{% url 'logout' %}" class="btn btn-danger">Logout</a></li>
+
+{% else %}
+
+<li><a href="/about/">About</a></li>
+<li><a href="/accounts/login/">Login</a></li>
+<li><a href="/accounts/signup/">Signup</a></li>
+
+{% endif %}
+
+</ul>
+
+{% if user.is_authenticated %}
+
+<a href="{% url 'sessions:create_session' %}" class="create-btn">
++ Create Session
+</a>
+
+{% endif %}
+
+</nav>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
