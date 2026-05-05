@@ -14,6 +14,10 @@ from pathlib import Path
 import os
 from decouple import config
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&ia2e%_k7p527=etv4#k-1l1hbt+m(-kl_-^q+tf60a_ii)u8y'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -97,11 +101,11 @@ ASGI_APPLICATION = 'community_platform.asgi.application'  # for channels
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "mydb",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "db",  # 🔥 docker service name
-        "PORT": "5432",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
 
@@ -117,7 +121,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # channels (development)
-REDIS_HOST = os.environ.get("REDIS_HOST", "redis")
+REDIS_HOST = os.getenv("REDIS_HOST")
 
 CHANNEL_LAYERS = {
     "default": {
@@ -173,16 +177,8 @@ CHANNEL_LAYERS = {
 }
 
 
-STRIPE_PUBLIC_KEY = "pk_test_your_key"
-
-STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
-
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 
 
 CELERY_BROKER_URL = 'redis://redis:6379/0'
@@ -199,8 +195,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'kushwahmonika218@email.com'
-EMAIL_HOST_PASSWORD = 'esvskxukfclsxrga'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 from datetime import timedelta
 
