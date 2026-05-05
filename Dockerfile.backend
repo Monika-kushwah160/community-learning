@@ -1,0 +1,12 @@
+FROM python:3.10
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip install --upgrade pip
+RUN pip install -r community_platform/requirements.txt
+
+WORKDIR /app/community_platform
+
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8001", "community_platform.asgi:application"]
